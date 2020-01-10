@@ -250,6 +250,7 @@ Method to draw all the components
 */
 void drawSS()
 {
+    int tInit = 580;
 
     /**
     Initial Text
@@ -257,9 +258,14 @@ void drawSS()
     glPushMatrix();
     {
         glColor3f(0,1,0);
-        drawText("Network Packet Transmission", 28, 0, 550);
+        drawText("Network Packet Transmission", 28, 0, tInit);
         glColor3f(1,0,0);
-        drawText("Author: Hasib", 14, 0, 530);
+        drawText("Author: Hasib", 14, 0, tInit-=20);
+        glColor3f(0,0,1);
+        drawText("r - router", 10,0, tInit-=20);
+        //glColor3f(1,0,0);
+        drawText("h - hacker interruption", 23,0,tInit-=20);
+        drawText("c - computer interaction", 24, 0, tInit-20);
     }
     glPopMatrix();
 
@@ -275,19 +281,33 @@ void drawSS()
         glColor3f(255.0/255.0,128.0/255.0,0);
         glScalef(1,1.5,1);
         drawCube(5);
+
+        //design
+        glTranslatef(0,3,4);
+        glColor3f(0,0.6,0);
+        glScalef(9,1,1);
+        drawSquare(.5);
+
+        glTranslatef(0,-3,0);
+        //glColor3f(1,0,0);
+        drawSquare(.5);
+
+        glTranslatef(0,-3,0);
+        //glColor3f(1,0,0);
+        drawSquare(.5);
     }
     glPopMatrix();
 
 
     /**
-    * Connection
+    * Connection wire
     */
     glPushMatrix();
     {
         glTranslatef(20,30,0);
-        glScalef(1,30,1);
-        glColor3f(0,0,1);
-        drawSquare(1);
+        glScalef(1,60,1);
+        glColor3f(1.0,0.6,0.2);
+        drawSquare(0.4);
     }
     glPopMatrix();
 
@@ -304,10 +324,180 @@ void drawSS()
     }
     glPopMatrix();
 
+    /**
+    * Computer 1
+    */
+    glPushMatrix();
+    {
+        glColor3f(1,0,0);
+        glTranslatef(60,60,0);
+        glScalef(1,1.5,1);
+        drawCube(3);
+
+        //design
+        glTranslatef(0,1.5,1.5);
+        glColor3f(1,1,1);
+        glScalef(9,1,1);
+        drawSquare(.3);
+
+
+        glTranslatef(0,-3,0);
+        //glColor3f(1,0,0);
+        drawSquare(.3);
+
+        glTranslatef(-.3,1.5,0);
+        glScalef(.09,6,1);
+        drawSquare(.3);
+
+
+    }
+    glPopMatrix();
+
+    /**
+    * Router - Computer 1
+    */
+    glPushMatrix();
+    {
+        glTranslatef(40,60,0);
+        glScalef(50,1,1);
+        glColor3f(1.0,0.6,0.2);
+        drawSquare(0.4);
+
+
+    }
+    glPopMatrix();
+
+
+    /**
+    * Computer 2
+    */
+    glPushMatrix();
+    {
+        glColor3f(1,0,0);
+        glTranslatef(-20,60,0);
+        glScalef(1,1.5,1);
+        drawCube(3);
+
+        //design
+        glTranslatef(0,1.5,1.5);
+        glColor3f(1,1,1);
+        glScalef(9,1,1);
+        drawSquare(.3);
+
+
+        glTranslatef(0,-3,0);
+        //glColor3f(1,0,0);
+        drawSquare(.3);
+
+        glTranslatef(-.3,1.5,0);
+        glScalef(.09,6,1);
+        drawSquare(.3);
+
+    }
+    glPopMatrix();
+
+    /**
+    * Router - Computer 2
+    */
+    glPushMatrix();
+    {
+        glTranslatef(0,60,0);
+        glScalef(50,1,1);
+        glColor3f(1.0,0.6,0.2);
+        drawSquare(0.4);
+    }
+    glPopMatrix();
+
+
+
+    /**
+    * Computer 3
+    */
+    glPushMatrix();
+    {
+        glColor3f(1,0,0);
+        glTranslatef(20,90,0);
+        glScalef(1,1.5,1);
+        drawCube(3);
+
+        //design
+        glTranslatef(0,1.5,1.5);
+        glColor3f(1,1,1);
+        glScalef(9,1,1);
+        drawSquare(.3);
+
+
+        glTranslatef(0,-3,0);
+        //glColor3f(1,0,0);
+        drawSquare(.3);
+
+        glTranslatef(-.3,1.5,0);
+        glScalef(.09,6,1);
+        drawSquare(.3);
+    }
+    glPopMatrix();
+
+    /**
+    * Router - Computer 3
+    */
+    glPushMatrix();
+    {
+        glTranslatef(20,70,0);
+        glScalef(1,40,1);
+        glColor3f(1.0,0.6,0.2);
+        drawSquare(0.4);
+    }
+    glPopMatrix();
+
+
+
+    /**
+    * Maintenance office
+    */
+    glPushMatrix();
+    {
+        glTranslatef(-40,0,0);
+        glColor3f(1,0,0);
+        glScalef(1,2,1);
+        drawCube(5);
+
+        //design
+        glColor3f(1,1,1);
+        glTranslatef(-3,0,3.5);
+        glScalef(1,5,1);
+        drawSquare(.5);
+
+        glTranslatef(6,0,0);
+        drawSquare(.5);
+
+
+        glTranslatef(-3,0.5,0);
+        glScalef(5,0.07,1);
+        drawSquare(.5);
+
+
+
+    }
+    glPopMatrix();
+
+    /**
+    * Maintenance office-server
+    */
+
+    glPushMatrix();
+    {
+        glTranslatef(-10,0,0);
+        glScalef(80,1,1);
+        glColor3f(1.0,0.6,0.2);
+        drawSquare(0.4);
+    }
+    glPopMatrix();
+
+
 }
 
-int xCameraAngle = 0;
-int yCameraAngle = 0;
+int xCameraAngle = -50;
+int yCameraAngle = 50;
 //int zCameraAngle = 0;
 
 void keyboardListener(unsigned char key, int x,int y){
