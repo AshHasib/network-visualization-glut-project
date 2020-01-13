@@ -1,10 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-
 #include <windows.h>
 #include <glut.h>
-
 #define pi (2*acos(0.0))
 
 double cameraHeight;
@@ -217,8 +215,46 @@ int width = 720;
 int height = 640;
 
 
+bool routerFlag = false;
+bool serverFlag = false;
+bool hackerFlag= false;
+
+char *hackerMessage = "HACKER INTERRUPTION!!";
+char *routerMessage = "ROUTER TO COMPUTER INTERACTION";
+char *serverMessage = "SERVER TO ROUTER TO COMPUTER INTERACTION";
 
 
+
+
+float c1 = 1.0;
+float c2 = 0.6;
+float c3 = 0.1;
+
+
+float b1 = 0;
+float b2 = 0;
+float b3 = 1;
+
+float r1 = 1;
+float r2 = 0;
+float r3 = 0;
+
+
+
+float rToCColor1= c1;
+float rToCColor2 = c2;
+float rToCColor3 = c3;
+
+float sToRColor1 = c1;
+float sToRColor2 = c2;
+float sToRColor3 = c3;
+
+float hToSColor1 = c1;
+float hToSColor2 = c2;
+float hToSColor3 = c3;
+
+
+float temp=0;
 
 void drawText(const char *text, int length, int x, int y) {
     glMatrixMode(GL_PROJECTION);
@@ -252,20 +288,41 @@ void drawSS()
 {
     int tInit = 580;
 
+
+
     /**
     Initial Text
     */
     glPushMatrix();
     {
         glColor3f(0,1,0);
-        drawText("Network Packet Transmission", 28, 0, tInit);
+        drawText("Network Packet Transmission", strlen("Network Packet Transmission"), 0, tInit);
         glColor3f(1,0,0);
         drawText("Author: Hasib", 14, 0, tInit-=20);
         glColor3f(0,0,1);
-        drawText("r - router", 10,0, tInit-=20);
+        drawText("r - router interaction", 10,0, tInit-=20);
         //glColor3f(1,0,0);
         drawText("h - hacker interruption", 23,0,tInit-=20);
-        drawText("c - computer interaction", 24, 0, tInit-20);
+        drawText("s - server interaction", 24, 0, tInit-20);
+
+
+        if (routerFlag && !hackerFlag && !serverFlag) {
+            glColor3f(0,0,1);
+            drawText(routerMessage, strlen(routerMessage), 0, tInit-40);
+        }
+        else if (serverFlag && !hackerFlag && !routerFlag) {
+            glColor3f(0,0,1);
+            drawText(serverMessage, strlen(serverMessage), 0, tInit-40);
+        }
+        else if (hackerFlag && !routerFlag && !serverFlag) {
+            glColor3f(1,0,0);
+            drawText(hackerMessage, strlen(hackerMessage), 0, tInit-40);
+        }
+        else {
+            glColor3f(1,1,1);
+            drawText("Press any key to see action", strlen("Press any key to see action"), 0, tInit-40);
+        }
+
     }
     glPopMatrix();
 
@@ -306,7 +363,7 @@ void drawSS()
     {
         glTranslatef(20,30,0);
         glScalef(1,60,1);
-        glColor3f(1.0,0.6,0.2);
+        glColor3f(sToRColor1,sToRColor2,sToRColor3);
         drawSquare(0.4);
     }
     glPopMatrix();
@@ -317,10 +374,23 @@ void drawSS()
     */
     glPushMatrix();
     {
-        glScalef(1,1.5,1);
-        glTranslatef(20,40,0);
+        glScalef(1,1,1);
+        glTranslatef(20,60,0);
         glColor3f(0,0,1);
         drawCube(5);
+
+        //design
+        glTranslatef(0,3.5,6.5);
+        glColor3f(1,1,1);
+        glScalef(9,1.5,1);
+        drawSquare(.3);
+
+        glTranslatef(0,-5,0);
+        drawSquare(.3);
+
+        glTranslatef(-.3,1.5,0);
+        glScalef(.09,6,1);
+        drawSquare(.3);
     }
     glPopMatrix();
 
@@ -360,7 +430,7 @@ void drawSS()
     {
         glTranslatef(40,60,0);
         glScalef(50,1,1);
-        glColor3f(1.0,0.6,0.2);
+        glColor3f(rToCColor1,rToCColor2,rToCColor3);
         drawSquare(0.4);
 
 
@@ -403,7 +473,7 @@ void drawSS()
     {
         glTranslatef(0,60,0);
         glScalef(50,1,1);
-        glColor3f(1.0,0.6,0.2);
+        glColor3f(rToCColor1,rToCColor2,rToCColor3);
         drawSquare(0.4);
     }
     glPopMatrix();
@@ -444,7 +514,7 @@ void drawSS()
     {
         glTranslatef(20,70,0);
         glScalef(1,40,1);
-        glColor3f(1.0,0.6,0.2);
+        glColor3f(rToCColor1,rToCColor2,rToCColor3);
         drawSquare(0.4);
     }
     glPopMatrix();
@@ -452,7 +522,7 @@ void drawSS()
 
 
     /**
-    * Maintenance office
+    * Hacker
     */
     glPushMatrix();
     {
@@ -481,18 +551,23 @@ void drawSS()
     glPopMatrix();
 
     /**
-    * Maintenance office-server
+    * Hacker -server
     */
 
     glPushMatrix();
     {
         glTranslatef(-10,0,0);
         glScalef(80,1,1);
-        glColor3f(1.0,0.6,0.2);
+        glColor3f(hToSColor1,hToSColor2,hToSColor3);
         drawSquare(0.4);
     }
     glPopMatrix();
 
+
+    glColor3f(0,1,1);
+    glTranslatef(10,30,-20);
+    glScalef(70,70,1);
+    drawCube(1);
 
 }
 
@@ -522,6 +597,30 @@ void keyboardListener(unsigned char key, int x,int y){
         }
         case '8': {
             yCameraAngle+=5;
+            break;
+        }
+
+        case 'h': {
+            hackerFlag = true;
+            routerFlag = false;
+            serverFlag = false;
+            printf("Hacker interruption.\n");
+            break;
+        }
+
+        case 's': {
+            hackerFlag = false;
+            routerFlag = false;
+            serverFlag = true;
+            printf("Server Interaction.\n");
+            break;
+        }
+
+        case 'r': {
+            hackerFlag = false;
+            routerFlag = true;
+            serverFlag = false;
+            printf("Router to Computer Interaction.\n");
             break;
         }
 
@@ -646,20 +745,89 @@ void display(){
 }
 
 
+bool isRed = false;
+bool isYellow = true;
+bool isBlue = false;
+
 void animate(){
+    if(hackerFlag) {
+        temp+=0.13;
 
-    angle +=.01;
-	rx+=0.1;
-	if(tx>180)
-    {
-        tx=-180;
+        if (temp>3 && isYellow) {
+            hToSColor1 = r1;
+            hToSColor2 = r2;
+            hToSColor3 = r3;
+            sToRColor1= r1;
+            sToRColor2 = r2;
+            sToRColor3 = r3;
+            rToCColor1= r1;
+            rToCColor2 = r2;
+            rToCColor3 = r3;
+            isRed = true;
+            isYellow = false;
+            temp=0;
+        }
+        else if (temp>3 && isRed) {
+            hToSColor1= c1;
+            hToSColor2 = c2;
+            hToSColor3 = c3;
+            sToRColor1= c1;
+            sToRColor2 = c2;
+            sToRColor3 = c3;
+            rToCColor1= c1;
+            rToCColor2 = c2;
+            rToCColor3 = c3;
+            isRed = false;
+            isYellow = true;
+            temp = 0;
+        }
     }
-    ty+=0.1;
-	if(ty>180)
-    {
-        ty=-180;
-    }
+    else if (serverFlag) {
+        temp+=0.13;
 
+        if (temp>3 && isYellow) {
+            sToRColor1= b1;
+            sToRColor1 = b2;
+            sToRColor1 = b3;
+            rToCColor1= b1;
+            rToCColor1 = b2;
+            rToCColor1 = b3;
+            isBlue = true;
+            isYellow = false;
+            temp=0;
+        }
+        else if (temp>3 && isBlue) {
+            sToRColor1= c1;
+            sToRColor1 = c2;
+            sToRColor1 = c3;
+            rToCColor1= c1;
+            rToCColor1 = c2;
+            rToCColor1 = c3;
+            temp = 0;
+            isYellow = true;
+            isBlue = false;
+        }
+    }
+    else if (routerFlag) {
+        temp+=0.13;
+
+        if (temp>3 && isYellow) {
+            rToCColor1= b1;
+            rToCColor1 = b2;
+            rToCColor1 = b3;
+            isBlue = true;
+            isYellow = false;
+            temp=0;
+        }
+        else if (temp>3 && isBlue) {
+            rToCColor1= c1;
+            rToCColor1 = c2;
+            rToCColor1 = c3;
+            temp = 0;
+            isYellow = true;
+            isBlue = false;
+        }
+    }
 
 	//codes for any changes in Models, Camera
 	glutPostRedisplay();
