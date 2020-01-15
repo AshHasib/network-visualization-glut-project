@@ -277,8 +277,8 @@ void drawText(const char *text, int length, int x, int y) {
     glMatrixMode(GL_MODELVIEW);
 }
 
-
-
+float hTocSTranslate = -43;
+float sToRTranslate = 0;
 
 
 /**
@@ -564,12 +564,53 @@ void drawSS()
     glPopMatrix();
 
 
-    glColor3f(0,1,1);
-    glTranslatef(10,30,-20);
-    glScalef(70,70,1);
-    drawCube(1);
+    /**
+    * hacker transmitting data
+    */
+    glPushMatrix();
+    {   glTranslatef(hTocSTranslate,0,0);
+        glColor3f(1,0,0);
+        drawCube(1);
+    }glPopMatrix();
+
+    glPushMatrix();
+    {   glTranslatef(hTocSTranslate+3,0,0);
+        glColor3f(1,0,0);
+        drawCube(1);
+    }glPopMatrix();
+
+    glPushMatrix();
+    {   glTranslatef(hTocSTranslate+6,0,0);
+        glColor3f(1,0,0);
+        drawCube(1);
+    }glPopMatrix();
+
+
+
+    /**
+    * Server to router data transmission
+    */
+    glPushMatrix();
+    {   glTranslatef(20,sToRTranslate,0);
+        glColor3f(0,0,1);
+        drawCube(1);
+    }glPopMatrix();
+    glPushMatrix();
+    {   glTranslatef(20,sToRTranslate+3,0);
+        glColor3f(0,0,1);
+        drawCube(1);
+    }glPopMatrix();
+    glPushMatrix();
+    {   glTranslatef(20,sToRTranslate-3,0);
+        glColor3f(0,0,1);
+        drawCube(1);
+    }glPopMatrix();
+
+
 
 }
+
+
 
 int xCameraAngle = -50;
 int yCameraAngle = 50;
@@ -750,7 +791,17 @@ bool isYellow = true;
 bool isBlue = false;
 
 void animate(){
+
+
+
+
     if(hackerFlag) {
+        sToRTranslate=0;
+        hTocSTranslate+=0.3;
+        if(hTocSTranslate>15) {
+            hTocSTranslate=-40;
+        }
+
         temp+=0.13;
 
         if (temp>3 && isYellow) {
@@ -767,7 +818,7 @@ void animate(){
             isYellow = false;
             temp=0;
         }
-        else if (temp>3 && isRed) {
+        else if (temp>3 && isRed || isBlue) {
             hToSColor1= c1;
             hToSColor2 = c2;
             hToSColor3 = c3;
@@ -778,11 +829,22 @@ void animate(){
             rToCColor2 = c2;
             rToCColor3 = c3;
             isRed = false;
+            isBlue = false;
             isYellow = true;
             temp = 0;
         }
     }
+
+
     else if (serverFlag) {
+        hTocSTranslate=-43;
+        sToRTranslate+=0.3;
+
+        if(sToRTranslate>50) {
+            sToRTranslate=0;
+        }
+
+
         temp+=0.13;
 
         if (temp>3 && isYellow) {
